@@ -1,2 +1,2 @@
 # cashRegister
-Windows Console App
+Windows Console Application
