@@ -72,21 +72,31 @@ namespace Cash_Register
                     switch (cashOutMenu)
                     {
                         case 1:
-                            Console.WriteLine($"Total: {totalCost}");
-                            Console.WriteLine("Enter the number to perform operation:");
-                            Console.WriteLine("1) Ring item");
-                            Console.WriteLine("2) Cash out");
-                            string cashoutOption = Console.ReadLine();
-                            Int32.TryParse(cashoutOption, out int choice);
+                            while (cashOutMenu == 1)
+                            {
+                                Console.WriteLine($"Total: {totalCost}");
+                                Console.WriteLine("Enter the number to perform operation:");
+                                Console.WriteLine("1) Ring item");
+                                Console.WriteLine("2) Cash out");
+                                string cashoutOption = Console.ReadLine();
+                                Int32.TryParse(cashoutOption, out int choice);
 
-                            if (choice == 1)
-                                mainMenu = 1;
-                            else if (choice == 2)
-                                cashOutMenu = 2;
-                            else
-                                mainMenu = 1;
+                                if (choice == 1)
+                                {
+                                    mainMenu = 1;
+                                    break;
+                                }
+                                else if (choice == 2)
+                                {
+                                    cashOutMenu = 2;
+                                }
+                                else
+                                {
+                                    mainMenu = 1;
+                                    break;
+                                }
+                            }
                             break;
-
                         case 2:
                             Console.WriteLine($"Your Total: ${totalCost:n2}");
                             Console.Write("You pay: $");
@@ -142,7 +152,13 @@ namespace Cash_Register
                                 Console.WriteLine($"{tenBills} ten dollar(s)");
                                 change = (change % 10.00m);
                             }
-                            if (change < 10.00m && change >= 1.00m)
+                            if (change < 10.00m && change >= 5.00m)
+                            {
+                                int fiveBills = (int)(change / 5.00m);
+                                Console.WriteLine($"{fiveBills} five dollar(s)");
+                                change = (change % 5.00m);
+                            }
+                            if (change < 5.00m && change >= 1.00m)
                             {
                                 int oneBills = (int)(change / 1.00m);
                                 Console.WriteLine($"{oneBills} one dollar(s)");
@@ -177,21 +193,33 @@ namespace Cash_Register
                             }
 
                             Console.WriteLine("\nThank you! Come Again");
-                            
+                            mainMenu = 0;
                             break;
 
                         default:
-                            //Console.WriteLine("You entered invalid choice");
-                            Environment.Exit(0);
+
+                            while ((cashOutMenu != 1) && (cashOutMenu != 2))
+                            {
+                                Console.WriteLine("-----------------------------");
+                                Console.WriteLine("Enter the number to perform operation:");
+                                Console.WriteLine("1) Go back");
+                                Console.WriteLine("2) Pay and receive change");
+                                cashOut = Console.ReadLine();
+
+                                Int32.TryParse(cashOut, out cashOutMenu);
+                                
+                             
+                            }
                             break;
+
 
                     }
                     //Environment.Exit(0);
-                    break;
+                    
                 }
 
                 else
-                    Console.WriteLine("You entered a invalid, press Enter to Exit");
+                    Console.WriteLine("You entered a invalid #, press Enter to Exit");
             }
 
             Console.ReadLine();    
